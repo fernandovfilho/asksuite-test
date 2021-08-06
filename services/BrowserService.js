@@ -5,7 +5,7 @@ const { getContent } = require("../repositories/searchRoomRepository");
 
 class BrowserService {
   static getBrowser() {
-    return puppeteer.launch({});
+    return puppeteer.launch();
   }
 
   static closeBrowser(browser) {
@@ -21,7 +21,7 @@ class BrowserService {
 
       const browser = await this.getBrowser();
       const page = await browser.newPage();
-      await page.exposeFunction("clearElement", clearElementString);
+      await page.exposeFunction("clearElementString", clearElementString);
       await page.goto(searchUrl);
       const rooms = await getContent(page);
 

@@ -9,9 +9,9 @@ class SearchController {
       checkout = DateTime.fromISO(checkout).toFormat("ddMMyyyy");
 
       const rooms = await BrowserService.roomSearch(checkin, checkout);
-      response.json(rooms);
+      return response.json(rooms);
     } catch (error) {
-      response.status(500).json(error);
+      return response.status(500).json(error);
     }
   };
 }

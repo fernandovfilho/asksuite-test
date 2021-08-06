@@ -3,7 +3,6 @@ const searchController = require("../controllers/SearchController");
 const SchemaValidator = require("../middlewares/SchemaValidator");
 const searchPayloadSchema = require("../schemas/searchPayloadSchema");
 const router = express.Router();
-const validator = new SchemaValidator();
 
 router.get("/", (req, res) => {
   res.send("Hello Asksuite World!");
@@ -13,7 +12,7 @@ router.get("/", (req, res) => {
 // Suggestion: Change this route to GET Method and pass search params in Query Parameters
 router.post(
   "/search",
-  validator.validate(searchPayloadSchema),
+  SchemaValidator.validate(searchPayloadSchema),
   searchController.roomSearch
 );
 

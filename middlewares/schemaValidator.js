@@ -15,4 +15,4 @@ class SchemaValidator {
   }
 }
 
-module.exports = SchemaValidator;
+module.exports = new SchemaValidator();
