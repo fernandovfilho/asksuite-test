@@ -1,5 +1,6 @@
 const express = require("express");
-const SchemaValidator = require("../middlewares/schemaValidator");
+const searchController = require("../controllers/SearchController");
+const SchemaValidator = require("../middlewares/SchemaValidator");
 const searchPayloadSchema = require("../schemas/searchPayloadSchema");
 const router = express.Router();
 const validator = new SchemaValidator();
@@ -8,8 +9,12 @@ router.get("/", (req, res) => {
   res.send("Hello Asksuite World!");
 });
 
-router.post("/search", validator.validate(searchPayloadSchema), (req, res) => {
-  return res.send();
-});
+// PS: According to the REST standard to fetch data from a resource GET method is used
+// Suggestion: Change this route to GET Method and pass search params in Query Parameters
+router.post(
+  "/search",
+  validator.validate(searchPayloadSchema),
+  searchController.roomSearch
+);
 
 module.exports = router;
