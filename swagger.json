@@ -1,0 +1,104 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Documentation for Ask Suite Dev Test.",
+    "version": "1.0.0",
+    "title": "Ask Suite Dev Test",
+    "contact": {
+      "email": "fernandov.filho@gmail.com"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "search",
+      "description": "Search for rooms"
+    }
+  ],
+  "schemes": ["http"],
+  "paths": {
+    "/search": {
+      "post": {
+        "tags": ["search"],
+        "summary": "Search for rooms by Checkin and Checkout",
+        "description": "",
+        "operationId": "searchRoom",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Search params",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Search"
+            }
+          }
+        ],
+        "responses": {
+          "422": {
+            "description": "Invalid input"
+          },
+          "200": {
+            "description": "Array of rooms",
+            "schema": {
+              "$ref": "#/definitions/RoomResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "RoomResponse": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/SearchRoomResult"
+      },
+      "xml": {
+        "name": "Seach"
+      }
+    },
+    "SearchRoomResult": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Standard"
+        },
+        "description": {
+          "type": "string",
+          "example": "Ideal para relaxar. Os quartos dispõem de diversos serviços para garantir uma estadia confortável e agradável. Todos os apartamentos Standar..."
+        },
+        "price": {
+          "type": "string",
+          "example": "R$ 2.400,00"
+        },
+        "image": {
+          "type": "string",
+          "example": "https://media.omnibees.com/Images/5462/RoomTypes/189952.jpg"
+        }
+      }
+    },
+    "Search": {
+      "type": "object",
+      "required": ["checkin", "checkout"],
+      "properties": {
+        "checkin": {
+          "type": "string",
+          "example": "2021-09-05"
+        },
+        "checkout": {
+          "type": "string",
+          "example": "2021-09-07"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
