@@ -1,6 +1,5 @@
 const SchemaValidator = require("./schemaValidator");
 const searchPayloadSchema = require("../schemas/searchPayloadSchema");
-const validator = new SchemaValidator();
 
 describe("validate search payload schema tests", () => {
   test("checkin date is after the checkout date, must return an error", () => {
@@ -9,7 +8,7 @@ describe("validate search payload schema tests", () => {
       checkout: "2021-07-03",
     };
     expect(
-      validator.validateSchema(searchPayloadSchema, payload)
+      SchemaValidator.validateSchema(searchPayloadSchema, payload)
     ).toMatchObject({ error: {} });
   });
 
@@ -19,7 +18,7 @@ describe("validate search payload schema tests", () => {
       checkout: "2021-07-03",
     };
     expect(
-      validator.validateSchema(searchPayloadSchema, payload)
+      SchemaValidator.validateSchema(searchPayloadSchema, payload)
     ).toMatchObject({ error: {} });
   });
 });
