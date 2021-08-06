@@ -1,8 +1,18 @@
 const { DateTime } = require("luxon");
 const supertest = require("supertest");
-const app = require("../server");
+const app = require("../app");
 
 describe("POST /search integration tests", () => {
+  let server = null;
+
+  beforeAll(() => {
+    server = app.listen();
+  });
+
+  afterAll(() => {
+    server.close();
+  });
+
   test(
     "POST /search with valid dates",
     async () => {
@@ -10,8 +20,9 @@ describe("POST /search integration tests", () => {
         checkin: DateTime.now().plus({ days: 30 }).toFormat("yyyy-MM-dd"),
         checkout: DateTime.now().plus({ days: 32 }).toFormat("yyyy-MM-dd"),
       };
+      const response = await supertest(server).post("/search").send(body);
 
-      const response = await supertest(app).post("/search").send(body);
+      server.close();
 
       expect(response.statusCode).toEqual(200);
       expect(response.body).toEqual(expect.arrayContaining([]));
@@ -27,7 +38,7 @@ describe("POST /search integration tests", () => {
         checkout: "2021-09-21",
       };
 
-      const response = await supertest(app).post("/search").send(body);
+      const response = await supertest(server).post("/search").send(body);
 
       expect(response.statusCode).toEqual(422);
     },
