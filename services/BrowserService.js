@@ -22,13 +22,14 @@ class BrowserService {
       const browser = await this.getBrowser();
       const page = await browser.newPage();
       await page.exposeFunction("clearElementString", clearElementString);
-      await page.goto(searchUrl);
+      await page.goto(searchUrl, {
+        waitUntil: "networkidle0",
+      });
       const rooms = await getContent(page);
-
       this.closeBrowser(browser);
       return rooms;
     } catch (error) {
-      console.log("error", error);
+      this.closeBrowser(browser);
       throw error;
     }
   }
